@@ -1,0 +1,46 @@
+{
+  "name": "assert-guard",
+  "version": "1.0.0",
+  "description": "Fails a pull request that weakens its own tests: removed assertions, skipped or focused tests, empty bodies and assertions that can never fail.",
+  "license": "MIT",
+  "author": "Umut Sever",
+  "type": "commonjs",
+  "main": "src/analyze.js",
+  "bin": {
+    "assert-guard": "src/cli.js"
+  },
+  "files": [
+    "src",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "mutation": "node scripts/mutation-gate.mjs",
+    "e2e": "node scripts/e2e.mjs",
+    "verify": "npm test && npm run e2e && npm run mutation"
+  },
+  "keywords": [
+    "github-action",
+    "testing",
+    "code-review",
+    "continuous-integration",
+    "test-quality",
+    "mutation-testing",
+    "pull-request",
+    "static-analysis"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umutseve4/assert-guard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/umutseve4/assert-guard/issues"
+  },
+  "homepage": "https://github.com/umutseve4/assert-guard#readme",
+  "dependencies": {}
+}

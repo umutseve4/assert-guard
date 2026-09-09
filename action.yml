@@ -1,0 +1,65 @@
+name: 'assert-guard'
+description: 'Fails a pull request that weakens its own tests: removed assertions, skipped or focused tests, empty bodies and assertions that can never fail.'
+author: 'Umut Sever'
+branding:
+  icon: 'shield'
+  color: 'red'
+
+inputs:
+  fail-on:
+    description: 'Threshold that fails the job: error, warning or never.'
+    required: false
+    default: 'error'
+  ignore:
+    description: 'Comma or newline separated path prefixes to skip entirely.'
+    required: false
+    default: ''
+  disable:
+    description: 'Comma or newline separated rule ids to switch off.'
+    required: false
+    default: ''
+  include-non-test-files:
+    description: 'Also apply the rules to files outside recognised test paths.'
+    required: false
+    default: 'false'
+  waiver-label:
+    description: 'Pull request label that turns a failing run into a report only run.'
+    required: false
+    default: 'assert-guard:waived'
+  base:
+    description: 'Override the base ref or sha of the comparison.'
+    required: false
+    default: ''
+  head:
+    description: 'Override the head ref or sha of the comparison.'
+    required: false
+    default: ''
+
+outputs:
+  findings:
+    description: 'JSON array of every finding.'
+    value: ${{ steps.assert-guard.outputs.findings }}
+  summary:
+    description: 'Markdown report, identical to the job summary.'
+    value: ${{ steps.assert-guard.outputs.summary }}
+  error-count:
+    description: 'Number of findings with severity error.'
+    value: ${{ steps.assert-guard.outputs.error-count }}
+  warning-count:
+    description: 'Number of findings with severity warning.'
+    value: ${{ steps.assert-guard.outputs.warning-count }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: assert-guard
+      shell: bash
+      run: node "$GITHUB_ACTION_PATH/src/action.js"
+      env:
+        INPUT_FAIL-ON: ${{ inputs.fail-on }}
+        INPUT_IGNORE: ${{ inputs.ignore }}
+        INPUT_DISABLE: ${{ inputs.disable }}
+        INPUT_INCLUDE-NON-TEST-FILES: ${{ inputs.include-non-test-files }}
+        INPUT_WAIVER-LABEL: ${{ inputs.waiver-label }}
+        INPUT_BASE: ${{ inputs.base }}
+        INPUT_HEAD: ${{ inputs.head }}
