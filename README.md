@@ -156,6 +156,8 @@ Running a suite is not evidence that the suite works. This repository holds itse
 - Every number in this section is recounted from the code by `scripts/verify-claims.mjs` on every run. If the README drifts, the build breaks.
 - `assert-guard` runs on its own pull requests. It has to pass its own rules first.
 
+[Pull request #1](https://github.com/umutseve4/assert-guard/pull/1) was opened to be blocked, and it is worth two minutes of your time. On one commit, the four unit test jobs are green and three other jobs are red: the tool caught the skip and the missing assertions, the mutation gate noticed that the deleted assertions were the ones guarding real branches, and the claims check refused a README that no longer matched the code.
+
 ```bash
 npm test           # unit tests
 npm run e2e        # end to end, needs git
